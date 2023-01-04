@@ -1,0 +1,141 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Ball : MonoBehaviour
+{
+    public static bool constrainLeftRight = false;
+
+    public float power = 2f;
+    public float jumpMultiplier = 2f;
+    public bool isActive;
+
+    public GameObject Particles;
+
+    private float changingSizeTime;
+
+    private bool sizeChanged = false;
+    private bool changingSize;
+    private Vector3 endSize;
+    private Vector3 startSize;
+
+    private Vector3 smallSize = new Vector3(0.5f, 0.5f, 0.5f);
+    private Vector3 normalSize = new Vector3(1f, 1f, 1f);
+
+    private Rigidbody myRigidbody;
+
+    public delegate void BallEvent();
+    public event BallEvent onJump;
+
+    public void Reset()
+    {
+        constrainLeftRight = false;
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+        myRigidbody = GetComponent<Rigidbody>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!isActive && IsGrounded())
+            isActive = true;
+
+        if (changingSize)
+        {
+            if (changingSizeTime < 1f)
+            {
+                changingSizeTime += Time.deltaTime;
+                transform.localScale = Vector3.Lerp(startSize, endSize, changingSizeTime / 1f);
+            }
+            else
+            {
+                transform.localScale = endSize;
+                changingSize = false;
+            }
+        }
+    }
+
+    bool IsGrounded()
+    {
+        int layerMask = ~(1 << 9);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down * 0.12f, 0.8f * (transform.localScale.y / 2), layerMask);
+
+        for (int n = 0; n < colliders.Length; n++)
+            if (!colliders[n].isTrigger)
+                return true;
+
+        return false;
+    }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
+                Application.Quit();
+            else
+                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }
+
+        if (isActive)
+        {
+            if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && IsGrounded())
+            {
+                Vector3 vel = GetComponent<Rigidbody>().velocity;
+                vel.y = 0;
+                GetComponent<Rigidbody>().velocity = vel;
+
+                GetComponent<Rigidbody>().AddForce(Vector3.up * power * jumpMultiplier * myRigidbody.mass, ForceMode.Force);
+
+                if (onJump != null)
+                    onJump();
+            }
+
+            if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && IsGrounded())
+                GetComponent<Rigidbody>().AddForce(Vector3.down * power * myRigidbody.mass, ForceMode.Force);
+
+            if (!constrainLeftRight)
+            {
+                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                    GetComponent<Rigidbody>().AddForce(Vector3.left * power * myRigidbody.mass, ForceMode.Force);
+
+                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+                    GetComponent<Rigidbody>().AddForce(Vector3.right * power * myRigidbody.mass, ForceMode.Force);
+            }
+        }
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        GetComponent<Rigidbody>().AddForce(Vector3.left * power * 5 * myRigidbody.mass, ForceMode.Force);
+    }
+
+    public void Boooom()
+    {
+        GameObject temp = Instantiate(Particles, transform.position, transform.rotation);
+        Destroy(temp, 1);
+    }
+
+    public void ChangeSize()
+    {
+        changingSizeTime = 0f;
+        changingSize = true;
+        if (sizeChanged)
+        {
+            startSize = transform.localScale;
+            endSize = normalSize;
+            myRigidbody.mass = 1f;
+        }
+        else
+        {
+            startSize = transform.localScale;
+            endSize = smallSize;
+            myRigidbody.mass = 0.0001f;
+        }
+        sizeChanged = !sizeChanged;
+    }
+}
