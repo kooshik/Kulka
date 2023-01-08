@@ -24,7 +24,7 @@ public class Score : MonoBehaviour
 
     public void AdvanceLevel(int threshold)
     {
-        if (score >= threshold)
+        if (score >= threshold && game != null)
             game.LevelUp();
     }
 }
