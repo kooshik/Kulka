@@ -11,9 +11,9 @@ public class SizingDoors : MonoBehaviour
 
     private void Collide(GameObject collidedObject)
     {
-        Ball ball = collidedObject.GetComponent<Ball>();
+        BallSizeGate ball = collidedObject.GetComponent<BallSizeGate>();
 
-        if(ball)
+        if (ball)
         {
             ball.ChangeSize();
         }
