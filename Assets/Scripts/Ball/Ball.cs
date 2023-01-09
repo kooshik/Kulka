@@ -47,7 +47,18 @@ public class Ball : MonoBehaviour
         return false;
     }
 
-    private void FixedUpdate()
+    virtual protected void FixedUpdate()
+    {
+        FixedUpdateEsc();
+
+        if (isActive)
+        {
+            FixedUpdateUpDown();
+            FixedUpdateLeftRight();
+        }
+    }
+
+    protected void FixedUpdateEsc()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -56,32 +67,35 @@ public class Ball : MonoBehaviour
             else
                 UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
+    }
 
-        if (isActive)
+    protected void FixedUpdateUpDown()
+    {
+        if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && IsGrounded())
         {
-            if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && IsGrounded())
-            {
-                Vector3 vel = GetComponent<Rigidbody>().velocity;
-                vel.y = 0;
-                GetComponent<Rigidbody>().velocity = vel;
+            Vector3 vel = GetComponent<Rigidbody>().velocity;
+            vel.y = 0;
+            GetComponent<Rigidbody>().velocity = vel;
 
-                GetComponent<Rigidbody>().AddForce(Vector3.up * power * jumpMultiplier * myRigidbody.mass, ForceMode.Force);
+            GetComponent<Rigidbody>().AddForce(Vector3.up * power * jumpMultiplier * myRigidbody.mass, ForceMode.Force);
 
-                if (onJump != null)
-                    onJump();
-            }
+            if (onJump != null)
+                onJump();
+        }
 
-            if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && IsGrounded())
-                GetComponent<Rigidbody>().AddForce(Vector3.down * power * myRigidbody.mass, ForceMode.Force);
+        if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && IsGrounded())
+            GetComponent<Rigidbody>().AddForce(Vector3.down * power * myRigidbody.mass, ForceMode.Force);
+    }
 
-            if (!constrainLeftRight)
-            {
-                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-                    GetComponent<Rigidbody>().AddForce(Vector3.left * power * myRigidbody.mass, ForceMode.Force);
+    protected void FixedUpdateLeftRight()
+    {
+        if (!constrainLeftRight)
+        {
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                GetComponent<Rigidbody>().AddForce(Vector3.left * power * myRigidbody.mass, ForceMode.Force);
 
-                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-                    GetComponent<Rigidbody>().AddForce(Vector3.right * power * myRigidbody.mass, ForceMode.Force);
-            }
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+                GetComponent<Rigidbody>().AddForce(Vector3.right * power * myRigidbody.mass, ForceMode.Force);
         }
     }
 
