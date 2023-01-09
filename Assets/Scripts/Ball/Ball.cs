@@ -35,7 +35,7 @@ public class Ball : MonoBehaviour
             isActive = true;
     }
 
-    bool IsGrounded()
+    protected bool IsGrounded()
     {
         int layerMask = ~(1 << 9);
         Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down * 0.12f, 0.8f * (transform.localScale.y / 2), layerMask);
@@ -79,8 +79,7 @@ public class Ball : MonoBehaviour
 
             GetComponent<Rigidbody>().AddForce(Vector3.up * power * jumpMultiplier * myRigidbody.mass, ForceMode.Force);
 
-            if (onJump != null)
-                onJump();
+            onJump?.Invoke();
         }
 
         if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && IsGrounded())

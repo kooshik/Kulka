@@ -200,6 +200,11 @@ PrefabInstance:
       propertyPath: levels.Array.data[0]
       value: 
       objectReference: {fileID: 7483891092110729939}
+    - target: {fileID: 2854151976854220810, guid: 06bdf624c1b8a224ba57e422fcc464d0,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2854151975718983614, guid: 06bdf624c1b8a224ba57e422fcc464d0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 06bdf624c1b8a224ba57e422fcc464d0, type: 3}
