@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour
     public float jumpMultiplier = 2f;
     public bool isActive;
 
+    public BallAvatar ballAvatar;
     public GameObject Particles;
 
     protected Rigidbody myRigidbody;
@@ -23,7 +24,7 @@ public class Ball : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         myRigidbody = GetComponent<Rigidbody>();
     }
@@ -73,17 +74,18 @@ public class Ball : MonoBehaviour
     {
         if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && IsGrounded())
         {
-            Vector3 vel = GetComponent<Rigidbody>().velocity;
+            Vector3 vel = myRigidbody.velocity;
             vel.y = 0;
-            GetComponent<Rigidbody>().velocity = vel;
+            myRigidbody.velocity = vel;
+            myRigidbody.AddForce(Vector3.up * power * jumpMultiplier * myRigidbody.mass, ForceMode.Force);
 
-            GetComponent<Rigidbody>().AddForce(Vector3.up * power * jumpMultiplier * myRigidbody.mass, ForceMode.Force);
+            ballAvatar.Squish();
 
             onJump?.Invoke();
         }
 
         if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && IsGrounded())
-            GetComponent<Rigidbody>().AddForce(Vector3.down * power * myRigidbody.mass, ForceMode.Force);
+            myRigidbody.AddForce(Vector3.down * power * myRigidbody.mass, ForceMode.Force);
     }
 
     protected void FixedUpdateLeftRight()
@@ -91,10 +93,10 @@ public class Ball : MonoBehaviour
         if (!constrainLeftRight)
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-                GetComponent<Rigidbody>().AddForce(Vector3.left * power * myRigidbody.mass, ForceMode.Force);
+                myRigidbody.AddForce(Vector3.left * power * myRigidbody.mass, ForceMode.Force);
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-                GetComponent<Rigidbody>().AddForce(Vector3.right * power * myRigidbody.mass, ForceMode.Force);
+                myRigidbody.AddForce(Vector3.right * power * myRigidbody.mass, ForceMode.Force);
         }
     }
 
@@ -107,5 +109,11 @@ public class Ball : MonoBehaviour
     {
         GameObject temp = Instantiate(Particles, transform.position, transform.rotation);
         Destroy(temp, 1);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (ballAvatar != null && collision.gameObject.tag == "Floor")
+            ballAvatar.Squash();
     }
 }

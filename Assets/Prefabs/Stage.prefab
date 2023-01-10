@@ -295,7 +295,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4615204762471485580}
+  - {fileID: 8897828676592425722}
   m_Father: {fileID: 2854151975668915182}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -377,6 +377,7 @@ MonoBehaviour:
   power: 64
   jumpMultiplier: 20
   isActive: 0
+  ballAvatar: {fileID: 461315813235754651}
   Particles: {fileID: 1150149475397896, guid: 6bd2dffaee24e5843986003ec4750c01, type: 3}
 --- !u!54 &2854151975718983615
 Rigidbody:
@@ -1260,6 +1261,51 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3933184846184600240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8897828676592425722}
+  - component: {fileID: 3067736948793302907}
+  m_Layer: 9
+  m_Name: RotationStabilizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8897828676592425722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3933184846184600240}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4615204762471485580}
+  m_Father: {fileID: 2854151975718983608}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3067736948793302907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3933184846184600240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276e2b4e4f6bf884193bca5f7b834287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7510526331542873041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,6 +1318,7 @@ GameObject:
   - component: {fileID: 5563525491231126697}
   - component: {fileID: 4576714002974130159}
   - component: {fileID: 461315813235754651}
+  - component: {fileID: 6661592821507032235}
   m_Layer: 9
   m_Name: BallAvatar
   m_TagString: Untagged
@@ -1286,12 +1333,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7510526331542873041}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2854151975718983608}
+  m_Father: {fileID: 8897828676592425722}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5563525491231126697
@@ -1356,3 +1403,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc6f8921b9aa5847a1853848b9bb368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 6661592821507032235}
+--- !u!95 &6661592821507032235
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7510526331542873041}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5dc0a523897379746934709ef0a83ad3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

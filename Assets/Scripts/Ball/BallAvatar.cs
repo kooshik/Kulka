@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class BallAvatar : MonoBehaviour
 {
-    // Update is called once per frame
-    void Update()
+    public Animator animator;
+
+    public void Squish()
     {
-        transform.rotation = Quaternion.identity;
+        animator.Play("BallAvatarSquish");
+    }
+
+    public void Squash()
+    {
+        animator.Play("BallAvatarSquash");
     }
 }
