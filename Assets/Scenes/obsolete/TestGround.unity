@@ -130,6 +130,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 461315813235754651, guid: 06bdf624c1b8a224ba57e422fcc464d0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2854151975668915176, guid: 06bdf624c1b8a224ba57e422fcc464d0,
         type: 3}
       propertyPath: m_Name
@@ -200,6 +205,12 @@ PrefabInstance:
       propertyPath: levels.Array.data[0]
       value: 
       objectReference: {fileID: 7483891092110729939}
+    - target: {fileID: 2854151975718983610, guid: 06bdf624c1b8a224ba57e422fcc464d0,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 338d69f64630be542b9a5858afd5b1c1,
+        type: 2}
     - target: {fileID: 2854151976854220810, guid: 06bdf624c1b8a224ba57e422fcc464d0,
         type: 3}
       propertyPath: m_IsTrigger
@@ -214,6 +225,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615204762471485580, guid: 06bdf624c1b8a224ba57e422fcc464d0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661592821507032235, guid: 06bdf624c1b8a224ba57e422fcc464d0,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06bdf624c1b8a224ba57e422fcc464d0, type: 3}
@@ -822,7 +843,7 @@ GameObject:
   - component: {fileID: 7358248658158511455}
   m_Layer: 8
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
